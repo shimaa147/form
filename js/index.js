@@ -208,7 +208,7 @@ var usernamemessagewelcome=document.getElementById('usernamemessagewelcome');
 
 let logOutbtn=document.getElementById('logOut');
 
-if( localStorage.getItem('usernamex')!=null) {
+if( localStorage.getItem('usernamex')!=null){
    
     usernamemessagewelcome.innerText=`Welcome ${JSON.parse(localStorage.getItem('usernamex'))}`;
     
@@ -239,44 +239,46 @@ forgetPassform?.addEventListener('submit',function(e){
         setTimeout(function(){
             
             window.location.href='../welcomepage.html';
-        },18000)
+        },5000)
         localStorage.setItem('usernamex',JSON.stringify(useserData[indexforget].userName));
        
     }
 });
 function checkEmail()
-{
+{    
     for(let i=0;i<useserData.length;i++)
         {
-        if(forgetPassEmail.value=="" ||  rePassword.value==""){
-           
-             descriptionforget.innerText="All inputs is required";
-             descriptionforget.classList.replace('d-none',"d-block");
-            }
-        else if(useserData[i].userEmail===forgetPassEmail.value) 
+            if(forgetPassEmail.value=="" ||  rePassword.value==""){
+               console.log('All inputs is ')
+                descriptionforget.innerText="All inputs is required";
+                descriptionforget.classList.replace('d-none',"d-block");
+       }
+            else if(useserData[i].userEmail===forgetPassEmail.value) 
             {
                 if(validateForgetForm()){
-                    globalIndex=i;
-                // console.log(i);
+                 indexforget =i;
+                 console.log(i);
                  descriptionforget.classList.replace('d-block',"d-none") ;
-                saveToLocalStorage(useserData);
-                return true;
 
-            }
-            else(!validateForgetForm())
-           {
-            descriptionforget.classList.replace('d-none',"d-block") ;
-                
-            descriptionforget.innerText="At least 8 characters,one special character at least,one capital character at least,one number at least";
-             
-            }
-        }
+                 JSON.parse(localStorage.getItem('data'))[i].userPassword=rePassword.value;
+                localStorage.setItem('data',JSON.stringify(useserData));
+                return true;
+              
+                }
+                else(!validateForgetForm())
+                {
+                    descriptionforget.classList.replace('d-none',"d-block") ;
+                        
+                    descriptionforget.innerText="invalid password At least 8 characters,one special character at least,one capital character at least,one number at least";
+                    
+                }
+           }
             
-        else if(useserData[i].userEmail!==forgetPassEmail.value&&!validateForgetForm() ){
+        else if(useserData[i].userEmail!==forgetPassEmail.value ){
             
              descriptionforget.classList.replace('d-none',"d-block") ;
           
-                descriptionforget.innerText="This e-mail or the password is invalid At least 8 characters,one special character at least,one capital character at least,one number at least";
+                descriptionforget.innerText="This e-mail or the password is invalid" ;
              
          
         }
@@ -285,39 +287,39 @@ function checkEmail()
       
 
 }
-function  updatePassword(){
+// function  updatePassword(){
 
-    for(let i=0;i<useserData[i].length;i++){
+//     for(let i=0;i<useserData[i].length;i++){
        
-        console.log('whello from updatepassword')
-            useserData[i].userPassword=rePassword.value;
-            saveToLocalStorage(useserData);
-           indexforget=i;
-           console.log('wwwwwwwwwww');
-            }
+//         console.log('whello from updatepassword')
+//             useserData[i].userPassword=rePassword.value;
+//             saveToLocalStorage(useserData);
+//            indexforget=i;
+//            console.log('wwwwwwwwwww');
+//             }
           
         
- return true;
-}
+//  return true;
+// }
 function validateForgetForm(){
     
        let regexrepass=/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/;
         if(regexrepass.test(rePassword.value)){
-            updatePassword();
+          
             rePassword.classList.add('is-valid');
             rePassword.classList.remove('is-invalid')
             
             descriptionforget.classList.replace("d-block",'d-none');
              return true;
-        }
-        else{
+         }
+        // else{
       
 
-            console.log("finsh updating and validation");
-            rePassword.classList.add('is-invalid');
-            rePassword.classList.remove('is-valid')
+        //     console.log("finsh updating and validation");
+        //     rePassword.classList.add('is-invalid');
+        //     rePassword.classList.remove('is-valid')
         
-        }
+        // }
     }
 
 if( localStorage.getItem('usernamex')!=null) {
